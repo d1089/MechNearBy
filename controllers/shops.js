@@ -17,7 +17,7 @@ exports.getShop = (req, res, next) => {
 // @desc add new shop details
 // @route get /api/v1/shops
 // @access Private
-exports.createtShop = (req, res, next) => {
+exports.createShop = (req, res, next) => {
   res.status(201).json({ success: true, msg: 'add new shop details' });
 };
 
