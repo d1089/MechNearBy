@@ -6,7 +6,12 @@ const shops = require('./routes/shops');
 dotenv.config({ path: './config/config.env' });
 
 const app = express();
-app.use(morgan('dev'));
+
+//Loggin middleware for development mode
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
 app.use('/api/v1/shops', shops);
 
 const PORT = process.env.PORT || 8080;
