@@ -1,9 +1,13 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
-const shops = require('./routes/shops');
+const connectDB = require('./config/db');
 
 dotenv.config({ path: './config/config.env' });
+
+connectDB();
+
+const shops = require('./routes/shops');
 
 const app = express();
 
@@ -16,7 +20,14 @@ app.use('/api/v1/shops', shops);
 
 const PORT = process.env.PORT || 8080;
 
-app.listen(
+const server = app.listen(
   PORT,
   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
 );
+
+//for Unhandled Rejection from server
+process.on('unhandledRejection', (err, promise) => {
+  console.log(`Error: ${err.message}`);
+  //close the server and exit()
+  server.close(() => process.exit(1));
+});
